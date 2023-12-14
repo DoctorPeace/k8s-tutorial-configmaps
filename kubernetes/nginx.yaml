@@ -33,8 +33,9 @@ spec:
       containers:
       - name: nginx
         image: nginx:alpine
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         volumeMounts:
-        - name: nginx-config-volume # referencing the volume name
-          mountPath: /etc/nginx/conf.d # specifying the mount location
+        - name: nginx-config-volume  # referencing the volume name
+          mountPath: /etc/nginx/  # specifying the mount location
