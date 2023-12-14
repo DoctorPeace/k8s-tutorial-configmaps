@@ -1,29 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Init') {
-            steps {
-                script {
-                    if (env.GIT_BRANCH == 'origin/main') {
-                        sh '''
-                        docker rmi nginx:alpine || echo "nginx:alpine image does not exist"
-                        docker network create project || echo "network already exists"
-                        echo "Main:Build successful"
-                        '''
-                    } else if (env.GIT_BRANCH == 'origin/dev') {
-                        sh '''
-                        docker rmi nginx:alpine || echo "nginx:alpine image does not exist"
-                        docker network create project || echo "network already exists"
-                        echo "Dev:Build successful"
-                        '''
-                    } else {
-                        sh '''
-                        echo "Init - Unrecognised branch"
-                        '''
-                    }    
-                }   
-            }
-        }
         stage('Build') {
             steps {
                 script {
@@ -34,7 +11,7 @@ pipeline {
                     } else if (env.GIT_BRANCH == 'origin/dev') {
                         sh '''
                         docker build -t nginx:alpine -t nginx:alpine:v${BUILD_NUMBER} .
-                        echo "Build successful"
+                        echo "dev:Build successful"
                         '''
                     } else {
                         sh '''
@@ -53,9 +30,7 @@ pipeline {
                         '''
                     } else if (env.GIT_BRANCH == 'origin/dev') {
                         sh '''
-                        docker push nginx:alpine
-                        docker push nginx:alpine:v${BUILD_NUMBER}
-                        echo "Push successful"
+                        echo "dev:Push successful"
                         '''
                     } else {
                         sh '''
@@ -77,7 +52,7 @@ pipeline {
                     } else if (env.GIT_BRANCH == 'origin/dev') {
                         sh '''
                         kubectl apply -f .
-                        echo "Dev:Build successful"
+                        echo "dev:Deploy successful"
                         '''
                     } else {
                         echo "Deploy - Unrecognised branch"
@@ -90,12 +65,13 @@ pipeline {
                 script {
                     if (env.GIT_BRANCH == 'origin/main') {
                         sh '''
-                        echo "rmi not required in main"
+                        echo "main:Cleanup successful"
                         '''
                     } else if (env.GIT_BRANCH == 'origin/dev') {
                         sh '''
                         docker system prune -f
                         docker rmi nginx:alpine:v${BUILD_NUMBER}
+                        echo "dev:Cleanup successful"
                         '''
                     } else {
                         echo "Cleanup - Unrecognised branch"

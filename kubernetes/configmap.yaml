@@ -3,10 +3,12 @@ kind: ConfigMap
 metadata:  
   name: nginx-config
 data:  
-  default.conf: |   # name of the file that will be mounted    
-    server {        
-      listen 80;        
-      location / {            
-        return 200 "Hello from NGINX Updated\n";        
-      }    
+  nginx.conf: |   # name of the file that will be mounted    
+    event {}
+      server {        
+        listen 80;        
+        location / {            
+          return 200 "Hello from NGINX Updated\n";        
+        }    
+      }
     }
