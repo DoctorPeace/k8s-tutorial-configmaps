@@ -3,12 +3,12 @@ kind: ConfigMap
 metadata:  
   name: nginx-config
 data:  
-  nginx.conf: |   # name of the file that will be mounted    
+  default.conf: |   # in YAML syntax, | indicates a multi-line string    
     event {}
       server {        
         listen 80;        
         location / {            
-          return 200 "Hello from NGINX Updated\n";        
+          return 200 "Hello from NGINX\n";        
         }    
       }
     }
