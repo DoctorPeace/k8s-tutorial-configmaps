@@ -4,11 +4,9 @@ metadata:
   name: nginx-config
 data:  
   default.conf: |   # in YAML syntax, | indicates a multi-line string    
-    events {}
       server {        
         listen 80;        
         location / {            
           return 200 "Hello from NGINX\n";        
         }    
       }
-    }
