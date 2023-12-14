@@ -4,7 +4,7 @@ metadata:
   name: nginx-config
 data:  
   default.conf: |   # in YAML syntax, | indicates a multi-line string    
-    event {}
+    events {}
       server {        
         listen 80;        
         location / {            

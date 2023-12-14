@@ -51,7 +51,7 @@ pipeline {
                         '''
                     } else if (env.GIT_BRANCH == 'origin/dev') {
                         sh '''
-                        kubectl apply -f .
+                        kubectl apply -f ./kubernetes
                         echo "dev:Deploy successful"
                         '''
                     } else {
